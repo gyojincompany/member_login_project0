@@ -156,10 +156,10 @@ public class MemberDao {
 			if(set.next()) {//조건이 참이면 DB에 이미 똑같은 아이디 있음
 				dto = new MemberDto();
 				dto.setId(set.getString("id"));//DB에서 불러온 해당 id의 데이터 중 id 값 불러오기
-				dto.setPw(set.getString("pw"));//DB에서 불러온 해당 id의 데이터 중 id 값 불러오기
-				dto.setName(set.getString("name"));//DB에서 불러온 해당 id의 데이터 중 id 값 불러오기
-				dto.seteMail(set.getString("eMail"));//DB에서 불러온 해당 id의 데이터 중 id 값 불러오기
-				dto.setAddress(set.getString("address"));//DB에서 불러온 해당 id의 데이터 중 id 값 불러오기
+				dto.setPw(set.getString("pw"));//DB에서 불러온 해당 id의 데이터 중 pw 값 불러오기
+				dto.setName(set.getString("name"));//DB에서 불러온 해당 id의 데이터 중 name 값 불러오기
+				dto.seteMail(set.getString("eMail"));//DB에서 불러온 해당 id의 데이터 중 email 값 불러오기
+				dto.setAddress(set.getString("address"));//DB에서 불러온 해당 id의 데이터 중 address 값 불러오기
 				
 			}
 			

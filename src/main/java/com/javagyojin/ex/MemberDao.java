@@ -3,9 +3,17 @@ package com.javagyojin.ex;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MemberDao {
+	
+	
+	static String driverName = "com.mysql.jdbc.Driver";
+	static String url = "jdbc:mysql://localhost:3306/memberdb";
+	static String user = "root";
+	static String password = "kjs1111";
+	
 	
 	private static MemberDao instance = new MemberDao();//싱글턴 패턴
 	
@@ -18,8 +26,7 @@ public class MemberDao {
 		return instance;
 	}
 
-	public int insertMember(MemberDto dto) {
-		
+	public int insertMember(MemberDto dto) {		
 		
 		String m_id = dto.getId();
 		String m_pw = dto.getPw();
@@ -28,10 +35,7 @@ public class MemberDao {
 		String m_address = dto.getAddress();
 		
 		int flag = 0;
-		String driverName = "com.mysql.jdbc.Driver";
-		String url = "jdbc:mysql://localhost:3306/memberdb";
-		String user = "root";
-		String password = "kjs1111";
+		
 		
 		Connection connection = null;
 		PreparedStatement pstmt = null;
@@ -68,6 +72,35 @@ public class MemberDao {
 		}
 		
 		return flag;		
+	}
+	
+	
+	public int confirmId(String id) {
+		int flag = 0;
+		
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		ResultSet set = null;
+		String query = "select id from members where id = ?";
+		
+		try {
+			Class.forName(driverName);
+			connection = DriverManager.getConnection(url, user, password);
+			pstmt = connection.prepareStatement(query);//sql을 실행시켜주는 객체 생성(Statement)
+			pstmt.setString(1, id);
+			set = pstmt.executeQuery();
+			
+			if(set.next()) {//조건이 참이면 DB에 이미 똑같은 아이디 있음
+				flag = 1;
+			} else {
+				flag = 0;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return flag;
 	}
 		
 	
